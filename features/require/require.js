@@ -1,6 +1,47 @@
 (function() {
   'use strict';
 
+  function _requirePartial(rvPartial, callback) {
+    var src = rvPartial.getAttribute('src') || false,
+        target = rvPartial.getAttribute('target');
+
+    if (!target) {
+      return callback(false);
+    }
+
+    if (src) {
+      window.Ractive.getHtml(src)
+        .then(function(template) {
+          callback(target, template);
+        });
+
+      return;
+    }
+
+    callback(target, rvPartial.innerHTML);
+  }
+
+  function _fetchPartials(element) {
+    return new window.Ractive.Promise(function(fulfil) {
+      var partials = {},
+          rvPartials = element.querySelectorAll('rv-partial'),
+          count = rvPartials.length;
+
+      Array.prototype.map.call(rvPartials, function(rvPartial) {
+        _requirePartial(rvPartial, function(target, template) {
+          if (target) {
+            partials[target] = template;
+          }
+
+          --count;
+          if (count < 1) {
+            fulfil(partials);
+          }
+        });
+      });
+    });
+  }
+
   function _requireElement(parent, element, callback, forceNoScript, forceNoCSS) {
     forceNoScript = forceNoScript || false;
 
@@ -49,20 +90,34 @@
 
     var template = window.Ractive.templates[name];
 
-    element.innerHTML = '';
+    _fetchPartials(element)
+      .then(function(partials) {
 
-    window.Ractive.fireController(name, function Component(config) {
-      config = config || {};
+        console.log(partials);
 
-      config.el = config.el || element;
-      config.template = config.template || template;
+        element.innerHTML = '';
 
-      return new window.Ractive(config);
-    }, element, template);
+        window.Ractive.fireController(name, function Component(config) {
+          config = config || {};
 
-    if (callback) {
-      callback();
-    }
+          config.el = config.el || element;
+          config.template = config.template || template;
+          if (config.partials) {
+            var partial;
+
+            for (partial in config.partials) {
+              partials[partial] = config.partials[partial];
+            }
+          }
+          config.partials = partials;
+
+          return new window.Ractive(config);
+        }, element, template);
+
+        if (callback) {
+          callback();
+        }
+      });
   }
 
   window.Ractive.templates = window.Ractive.templates || {};
