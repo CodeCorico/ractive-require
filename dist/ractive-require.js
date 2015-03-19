@@ -240,12 +240,16 @@
 
   window.Ractive.templates = window.Ractive.templates || {};
 
-  window.Ractive.prototype.require = function() {
+  window.Ractive.prototype.require = function(name) {
+    name = name || null;
+
     var _this = this;
 
     return new window.Ractive.Promise(function(fulfil) {
 
-      var elements = _this.findAll('rv-require[src]:not([loaded="true"])'),
+      var elements = name ?
+            _this.findAll('rv-require[src][ondemand="' + name + '"]:not([loaded="true"])') :
+            _this.findAll('rv-require[src]:not([loaded="true"]):not([ondemand])'),
           count = elements.length;
 
       if (count < 1) {
