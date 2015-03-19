@@ -67,19 +67,19 @@
     }
   };
 
-  function _callControllers(controllers, Component, el, template, i) {
+  function _callControllers(controllers, Component, data, el, config, i) {
     i = i || 0;
 
     if (i < controllers.length) {
-      controllers[i](Component, el, template, function() {
-        _callControllers(controllers, Component, el, template, ++i);
+      controllers[i](Component, data, el, config, function() {
+        _callControllers(controllers, Component, data, el, config, ++i);
       });
     }
   }
 
-  window.Ractive.fireController = function(name, Component, el, template) {
+  window.Ractive.fireController = function(name, Component, data, el, config) {
     if (_controllers[name]) {
-      _callControllers(_controllers[name], Component, el, template);
+      _callControllers(_controllers[name], Component, data, el, config);
     }
   };
 
@@ -108,11 +108,20 @@
     callback(target, rvPartial.innerHTML);
   }
 
-  function _fetchPartials(element) {
+  function _fetchPartials(element, parent) {
     return new window.Ractive.Promise(function(fulfil) {
       var partials = {},
           rvPartials = element.querySelectorAll('rv-partial'),
-          count = rvPartials.length;
+          count = rvPartials.length,
+          partialName;
+
+      for (partialName in parent.partials) {
+        partials[partialName] = parent.partials[partialName];
+      }
+
+      if (!count) {
+        return fulfil(partials);
+      }
 
       Array.prototype.map.call(rvPartials, function(rvPartial) {
         _requirePartial(rvPartial, function(target, template) {
@@ -127,6 +136,26 @@
         });
       });
     });
+  }
+
+  function _fetchData(element, parent) {
+    var data = {},
+        attr,
+        name;
+
+    for (var i = 0; i < element.attributes.length; i++) {
+      attr = element.attributes[i];
+      if (attr.name.indexOf('data-bind-') === 0) {
+        name = attr.name.substr(10, attr.name.length - 10);
+        data[name] = parent.get(attr.value);
+      }
+      else if (attr.name.indexOf('data-') === 0) {
+        name = attr.name.substr(5, attr.name.length - 5);
+        data[name] = attr.value;
+      }
+    }
+
+    return data;
   }
 
   function _requireElement(parent, element, callback, forceNoScript, forceNoCSS) {
@@ -175,12 +204,11 @@
       return;
     }
 
-    var template = window.Ractive.templates[name];
+    var template = window.Ractive.templates[name],
+        data = _fetchData(element, parent);
 
-    _fetchPartials(element)
+    _fetchPartials(element, parent)
       .then(function(partials) {
-
-        console.log(partials);
 
         element.innerHTML = '';
 
@@ -199,7 +227,10 @@
           config.partials = partials;
 
           return new window.Ractive(config);
-        }, element, template);
+        }, data, element, {
+          template: template,
+          partials: partials
+        });
 
         if (callback) {
           callback();
