@@ -1,0 +1,33 @@
+{
+  "browser": true,
+  "jquery": true,
+  "node": true,
+  "esnext": true,
+  "globalstrict": true,
+  "quotmark": true,
+  "undef": true,
+  "unused": true,
+  "expr": true,
+  "strict": true,
+  "shadow": true,
+  "trailing": true,
+  "sub": true,
+  "supernew": true,
+  "newcap": false,
+  "globals": {
+    "require": false
+  },
+  "evil": true,
+  "predef": [
+    "inject",
+    "describe",
+    "it",
+    "expect",
+    "sinon",
+    "beforeEach",
+    "afterEach",
+    "before",
+    "after",
+    "assert"
+  ]
+}
