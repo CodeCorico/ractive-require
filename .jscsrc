@@ -1,0 +1,44 @@
+{
+  "preset": "airbnb",
+  "fileExtensions": [".js", "jscs"],
+
+  "disallowSpacesInsideObjectBrackets": null,
+  "disallowImplicitTypeConversion": ["string"],
+
+  "disallowMultipleVarDecl": null,
+  "requireLineBreakAfterVariableAssignment": true,
+  "requireBlocksOnNewline": true,
+  "requireKeywordsOnNewLine": [
+    "else",
+    "for",
+    "while",
+    "do",
+    "switch",
+    "case",
+    "try",
+    "catch"
+  ],
+  "requireCurlyBraces": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "switch",
+    "try",
+    "catch"
+  ],
+  "requirePaddingNewlinesBeforeKeywords": [
+    "do",
+    "for",
+    "switch",
+    "try",
+    "while",
+    "return"
+  ],
+
+  "excludeFiles": [
+    "node_modules/**",
+    "public/**"
+  ]
+}
