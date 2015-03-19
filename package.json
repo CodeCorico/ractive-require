@@ -1,0 +1,29 @@
+{
+  "name": "ractive-require",
+  "version": "0.0.1",
+  "description": "Require Ractive components in Package by Feature way",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:XavierBoubert/ractive-require.git"
+  },
+  "keywords": [
+    "ractive",
+    "require",
+    "components"
+  ],
+  "author": "Xavier Boubert <xavier@boubert.fr>",
+  "bugs": {
+    "url": "https://github.com/XavierBoubert/ractive-require/issues"
+  },
+  "homepage": "https://github.com/XavierBoubert/ractive-require",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-uglifyjs": "^0.6.1"
+  }
+}
