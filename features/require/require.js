@@ -75,7 +75,7 @@
     forceNoScript = forceNoScript || false;
 
     var src = element.getAttribute('src'),
-        name = element.getAttribute('name') || src,
+        name = element.getAttribute('name'),
         noScript = forceNoScript || element.getAttribute('no-script') == 'true',
         noCSS = forceNoCSS || element.getAttribute('no-css') == 'true';
 
