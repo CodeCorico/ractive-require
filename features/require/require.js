@@ -79,6 +79,14 @@
         noScript = forceNoScript || element.getAttribute('no-script') == 'true',
         noCSS = forceNoCSS || element.getAttribute('no-css') == 'true';
 
+    if (!src) {
+      throw new Error('nv-require needs to have a "src" attrbute');
+    }
+
+    if (!name) {
+      throw new Error('nv-require needs to have a "name" attrbute');
+    }
+
     element.setAttribute('loaded', 'true');
 
     if (!window.Ractive.templates[name]) {

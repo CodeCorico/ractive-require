@@ -162,9 +162,17 @@
     forceNoScript = forceNoScript || false;
 
     var src = element.getAttribute('src'),
-        name = element.getAttribute('name') || src,
+        name = element.getAttribute('name'),
         noScript = forceNoScript || element.getAttribute('no-script') == 'true',
         noCSS = forceNoCSS || element.getAttribute('no-css') == 'true';
+
+    if (!src) {
+      throw new Error('nv-require needs to have a "src" attrbute');
+    }
+
+    if (!name) {
+      throw new Error('nv-require needs to have a "name" attrbute');
+    }
 
     element.setAttribute('loaded', 'true');
 
