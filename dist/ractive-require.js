@@ -99,6 +99,8 @@
     if (src) {
       window.Ractive.getHtml(src)
         .then(function(template) {
+          template = _applyAbsolutePath(template, src);
+
           callback(target, template);
         });
 
@@ -158,6 +160,17 @@
     return data;
   }
 
+  function _applyAbsolutePath(template, src) {
+    var newSrc = src.split('/');
+
+    return template.replace(/(rv\-require|rv\-partial).?src="(.*?)"/g, function(match, tag, elementSrc) {
+      newSrc.pop();
+      newSrc.push(elementSrc);
+
+      return match.replace(/src="(.*?)"/, 'src="' + newSrc.join('/') + '"');
+    });
+  }
+
   function _requireElement(parent, element, callback, forceNoScript, forceNoCSS) {
     forceNoScript = forceNoScript || false;
 
@@ -204,6 +217,8 @@
 
       window.Ractive.getHtml(src + '.html')
         .then(function(template) {
+          template = _applyAbsolutePath(template, src);
+
           window.Ractive.templates[name] = template;
 
           _requireElement(parent, element, callback);
@@ -233,8 +248,24 @@
             }
           }
           config.partials = partials;
+          config.parentRequire = parent;
 
-          return new window.Ractive(config);
+          var ractive = new window.Ractive(config);
+
+          ractive.on('teardown', function() {
+            ractive.parentRequire = null;
+
+            for (var i = 0; i < parent.childrenRequire.length; i++) {
+              if (parent.childrenRequire[i] === ractive) {
+                parent.childrenRequire.splice(i, 1);
+                break;
+              }
+            }
+          });
+
+          parent.childrenRequire.push(ractive);
+
+          return ractive;
         }, data, element, {
           template: template,
           partials: partials
@@ -264,6 +295,8 @@
     name = name || null;
 
     var _this = this;
+
+    this.childrenRequire = this.childrenRequire || [];
 
     return new window.Ractive.Promise(function(fulfil) {
 

@@ -12,6 +12,8 @@
     if (src) {
       window.Ractive.getHtml(src)
         .then(function(template) {
+          template = _applyAbsolutePath(template, src);
+
           callback(target, template);
         });
 
@@ -71,6 +73,17 @@
     return data;
   }
 
+  function _applyAbsolutePath(template, src) {
+    var newSrc = src.split('/');
+
+    return template.replace(/(rv\-require|rv\-partial).?src="(.*?)"/g, function(match, tag, elementSrc) {
+      newSrc.pop();
+      newSrc.push(elementSrc);
+
+      return match.replace(/src="(.*?)"/, 'src="' + newSrc.join('/') + '"');
+    });
+  }
+
   function _requireElement(parent, element, callback, forceNoScript, forceNoCSS) {
     forceNoScript = forceNoScript || false;
 
@@ -117,6 +130,8 @@
 
       window.Ractive.getHtml(src + '.html')
         .then(function(template) {
+          template = _applyAbsolutePath(template, src);
+
           window.Ractive.templates[name] = template;
 
           _requireElement(parent, element, callback);
