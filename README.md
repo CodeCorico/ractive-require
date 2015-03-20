@@ -20,7 +20,6 @@ Copy the [dist](https://github.com/XavierBoubert/ractive-require/tree/master/dis
 
 ## Todo
 
-- .require() unscoped problem
 - unload or freeze a require
 - virtualization
 

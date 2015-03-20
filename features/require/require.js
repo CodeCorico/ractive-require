@@ -151,6 +151,18 @@
       });
   }
 
+  function _inScope(element, parent) {
+    if(element.parentNode != parent) {
+      if(element.parentNode.tagName.toLowerCase() == 'rv-require') {
+        return false;
+      }
+
+      return _inScope(element.parentNode, parent);
+    }
+
+    return true;
+  }
+
   window.Ractive.templates = window.Ractive.templates || {};
 
   window.Ractive.prototype.require = function(name) {
@@ -170,12 +182,15 @@
       }
 
       elements.forEach(function(element) {
-        _requireElement(_this, element, function() {
-          --count;
-          if (count < 1) {
-            fulfil();
-          }
-        });
+
+        if (_inScope(element, _this.el)) {
+          _requireElement(_this, element, function() {
+            --count;
+            if (count < 1) {
+              fulfil();
+            }
+          });
+        }
       });
 
     });
