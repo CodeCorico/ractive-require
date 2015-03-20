@@ -146,8 +146,24 @@
             }
           }
           config.partials = partials;
+          config.parentRequire = parent;
 
-          return new window.Ractive(config);
+          var ractive = new window.Ractive(config);
+
+          ractive.on('teardown', function() {
+            ractive.parentRequire = null;
+
+            for (var i = 0; i < parent.childrenRequire.length; i++) {
+              if (parent.childrenRequire[i] === ractive) {
+                parent.childrenRequire.splice(i, 1);
+                break;
+              }
+            }
+          });
+
+          parent.childrenRequire.push(ractive);
+
+          return ractive;
         }, data, element, {
           template: template,
           partials: partials
@@ -177,6 +193,8 @@
     name = name || null;
 
     var _this = this;
+
+    this.childrenRequire = this.childrenRequire || [];
 
     return new window.Ractive.Promise(function(fulfil) {
 
