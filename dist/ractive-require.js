@@ -247,8 +247,8 @@
   }
 
   function _inScope(element, parent) {
-    if(element.parentNode != parent) {
-      if(element.parentNode.tagName.toLowerCase() == 'rv-require') {
+    if (element.parentNode != parent) {
+      if (element.parentNode.tagName.toLowerCase() == 'rv-require') {
         return false;
       }
 
