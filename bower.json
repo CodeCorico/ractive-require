@@ -1,0 +1,23 @@
+{
+  "name": "ractive-require",
+  "version": "0.0.1",
+  "description": "Require Ractive views on demand in Package by Feature way",
+  "homepage": "https://github.com/XavierBoubert/ractive-require",
+  "main": "dist/ractive-require.js",
+  "license": "MIT",
+  "keywords": [
+    "ractive",
+    "require",
+    "components"
+  ],
+  "authors": [
+    "Xavier Boubert <xavier@boubert.fr>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
