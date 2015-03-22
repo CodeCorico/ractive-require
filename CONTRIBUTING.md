@@ -168,7 +168,7 @@ to read on github as well as in various git tools.
 ### Type
 Must be one of the following:
 
-* **project**: Modifications on project details (like readme files)
+* **chore**: Modifications on project details (like readme files)
 * **feat**: A new feature
 * **fix**: A bug fix
 * **rules**: Modifications on rules
