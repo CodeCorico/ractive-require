@@ -168,14 +168,25 @@
           ractive.on('teardown', function() {
             ractive.parentRequire = null;
 
-            for (var i = 0; i < parent.childrenRequire.length; i++) {
-              if (parent.childrenRequire[i] === ractive) {
-                parent.childrenRequire.splice(i, 1);
-                break;
+            var i;
+
+            if (parent && parent.childrenRequire) {
+              for (i = 0; i < parent.childrenRequire.length; i++) {
+                if (parent.childrenRequire[i] === ractive) {
+                  parent.childrenRequire.splice(i, 1);
+                  break;
+                }
+              }
+            }
+
+            if (ractive.childrenRequire) {
+              for (i = ractive.childrenRequire.length - 1; i >= 0; i--) {
+                ractive.childrenRequire[i].teardown();
               }
             }
           });
 
+          ractive.childrenRequire = [];
           parent.childrenRequire.push(ractive);
 
           return ractive;

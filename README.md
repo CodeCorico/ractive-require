@@ -18,12 +18,6 @@ After that, you can create your own Pull Requests (PR) and submit them here.
 
 Copy the [dist](https://github.com/XavierBoubert/ractive-require/tree/master/dist) folder into your project and include ```ractive-require.js``` or ```ractive-require.min.js``` (production) it in your HTML page AFTER Ractive.
 
-## Todo
-
-- unload or freeze a require
-- virtualization
-
-
 ## Lead contribution team
 
 * [Xavier Boubert](http://xavierboubert.fr) [@xavierboubert](http://twitter.com/XavierBoubert)
