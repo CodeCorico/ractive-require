@@ -171,9 +171,9 @@ Ractive.controller('button', function(Feature, data, el, config, done) {
 
   console.log(data.id);
 
-  // With the first button, data.id gets the 5 direct value
-  // With the second, data.id gets the value of the parent view
-  // "ractive.data.model.id"
+  // With the first button, data.id gets the 5 direct value.
+  // With the second, data.id gets the value of the parent view "ractive.data.model.id"
+  // If the parent value "model.id" changes, the value is directly changed in the child too.
   // If you pass an object, it will not be cloned but directly sent.
 
 });
