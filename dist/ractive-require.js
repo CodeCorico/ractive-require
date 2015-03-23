@@ -169,7 +169,7 @@
   function _applyAbsolutePath(template, src) {
     var newSrc = src.split('/');
 
-    return template.replace(/(rv\-require|rv\-partial).?src="(.*?)"/g, function(match, tag, elementSrc) {
+    return template.replace(/(rv\-require|rv\-partial)[^]+src="(.*?)"/g, function(match, tag, elementSrc) {
       newSrc.pop();
       newSrc.push(elementSrc);
 
