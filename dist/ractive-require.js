@@ -141,8 +141,9 @@
     });
   }
 
-  function _fetchData(element, parent) {
+  function _fetchDataBinding(element, parent) {
     var data = {},
+        binds = {},
         attr,
         name;
 
@@ -151,6 +152,7 @@
       if (attr.name.indexOf('data-bind-') === 0) {
         name = attr.name.substr(10, attr.name.length - 10);
         data[name] = parent.get(attr.value);
+        binds[name] = attr.value;
       }
       else if (attr.name.indexOf('data-') === 0) {
         name = attr.name.substr(5, attr.name.length - 5);
@@ -158,7 +160,10 @@
       }
     }
 
-    return data;
+    return {
+      data: data,
+      binds: binds
+    };
   }
 
   function _applyAbsolutePath(template, src) {
@@ -169,6 +174,12 @@
       newSrc.push(elementSrc);
 
       return match.replace(/src="(.*?)"/, 'src="' + newSrc.join('/') + '"');
+    });
+  }
+
+  function _createObserver(parent, view, bind, keypath) {
+    return parent.observe(keypath, function(value) {
+      view.set(bind, value);
     });
   }
 
@@ -229,7 +240,7 @@
     }
 
     var template = window.Ractive.templates[name],
-        data = _fetchData(element, parent);
+        databinding = _fetchDataBinding(element, parent);
 
     _fetchPartials(element, parent)
       .then(function(partials) {
@@ -251,12 +262,23 @@
           config.partials = partials;
           config.parentRequire = parent;
 
-          var ractive = new window.Ractive(config);
+          var ractive = new window.Ractive(config),
+              observers = [],
+              bind;
+
+          for (bind in databinding.binds) {
+            observers.push(_createObserver(parent, ractive, bind, databinding.binds[bind]));
+          }
 
           ractive.on('teardown', function() {
             ractive.parentRequire = null;
 
             var i;
+
+            for (i = 0; i < observers.length; i++) {
+              observers[i].cancel();
+            }
+            observers = null;
 
             if (parent && parent.childrenRequire) {
               for (i = 0; i < parent.childrenRequire.length; i++) {
@@ -278,7 +300,7 @@
           parent.childrenRequire.push(ractive);
 
           return ractive;
-        }, data, element, {
+        }, databinding.data, element, {
           template: template,
           partials: partials
         });
