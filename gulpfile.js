@@ -3,6 +3,9 @@
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglifyjs'),
+    insert = require('gulp-insert'),
+    packagejson = require('./package.json'),
+    header = '/*! Ractive-Require (' + packagejson.version + '). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */\r\n',
     files = [
       'features/get/get.js',
       'features/controller/controller.js',
@@ -15,12 +18,17 @@ gulp.task('build', function() {
   gulp
     .src(files)
     .pipe(concat('ractive-require.js', {newLine: '\r\n'}))
-    .pipe(gulp.dest('./dist'));
-
-  gulp
-    .src(files)
+    .pipe(insert.prepend(header))
+    .pipe(gulp.dest('./dist'))
     .pipe(uglify('ractive-require.min.js', {
       outSourceMap: true
+    }))
+    .pipe(insert.transform(function(contents) {
+      if (contents.substr(0, 1) != '{') {
+        contents = header + contents;
+      }
+
+      return contents;
     }))
     .pipe(gulp.dest('./dist'));
 });

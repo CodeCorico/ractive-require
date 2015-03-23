@@ -1,3 +1,4 @@
+/*! Ractive-Require (0.1.0). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
