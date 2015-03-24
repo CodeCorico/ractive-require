@@ -169,11 +169,20 @@
   function _applyAbsolutePath(template, src) {
     var newSrc = src.split('/');
 
-    return template.replace(/(rv\-require|rv\-partial)[^]+src="(.*?)"/g, function(match, tag, elementSrc) {
+    return template.replace(/[^-]src="(.*?)"/g, function(match, elementSrc) {
+      if (
+        elementSrc.indexOf('{') === 0 ||
+        elementSrc.indexOf('/') === 0 ||
+        elementSrc.indexOf('http://') === 0 ||
+        elementSrc.indexOf('https://') === 0
+      ) {
+        return match;
+      }
+
       newSrc.pop();
       newSrc.push(elementSrc);
 
-      return match.replace(/src="(.*?)"/, 'src="' + newSrc.join('/') + '"');
+      return match.replace(elementSrc, newSrc.join('/'));
     });
   }
 
