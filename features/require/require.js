@@ -79,7 +79,9 @@
   }
 
   function _applyAbsolutePath(template, src) {
-    var newSrc = src.split('/');
+    var newSrc = src.split('/'),
+        a = document.createElement('a'),
+        host = window.location.protocol + '//' + window.location.host;
 
     return template.replace(/[^-]src="(.*?)"/g, function(match, elementSrc) {
       if (
@@ -94,7 +96,9 @@
       newSrc.pop();
       newSrc.push(elementSrc);
 
-      return match.replace(elementSrc, newSrc.join('/'));
+      a.href = newSrc.join('/');
+
+      return match.replace(elementSrc, a.href.substr(host.length, a.href.length - host.length));
     });
   }
 
