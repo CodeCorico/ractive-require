@@ -10,7 +10,12 @@ Require Ractive views on demand in Package by Feature way.
 
 ## Installation
 
-Copy the [dist](https://github.com/XavierBoubert/ractive-require/tree/master/dist) folder into your project and include ```ractive-require.js``` or ```ractive-require.min.js``` (production) file in your HTML page **after** Ractive.
+Use the CDN version:
+```HTML
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ractive-require/0.1.1/ractive-require.min.js"></script>
+```
+
+Or copy the [dist](https://github.com/XavierBoubert/ractive-require/tree/master/dist) folder into your project and include ```ractive-require.js``` or ```ractive-require.min.js``` (production) file in your HTML page **after** Ractive.
 
 ## How to use
 
