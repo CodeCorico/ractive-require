@@ -129,27 +129,15 @@
     if (!window.Ractive.templates[name]) {
 
       if (!noScript) {
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = src + '.js';
-        script.onload = function() {
+        return window.Ractive.require(src + '.js').then(function() {
           _requireElement(parent, element, callback, true, noCSS);
-        };
-        document.getElementsByTagName('head')[0].appendChild(script);
-
-        return;
+        });
       }
 
       if (!noCSS) {
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = src + '.css';
-        link.onload = function() {
+        return window.Ractive.require(src + '.css').then(function() {
           _requireElement(parent, element, callback, noScript, true);
-        };
-        document.getElementsByTagName('head')[0].appendChild(link);
-
-        return;
+        });
       }
 
       window.Ractive.getHtml(src + '.html')
