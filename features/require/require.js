@@ -184,6 +184,7 @@
               partials[partial] = config.partials[partial];
             }
           }
+
           config.partials = partials;
           config.parentRequire = parent;
 
@@ -203,6 +204,7 @@
             for (i = 0; i < observers.length; i++) {
               observers[i].cancel();
             }
+
             observers = null;
 
             if (parent && parent.childrenRequire) {
@@ -248,7 +250,64 @@
     return true;
   }
 
+  function _inject(name, file, elementConstructor, callback) {
+    name = name.split('/').pop();
+
+    if (window.Ractive.injects.indexOf(name) > -1) {
+      return callback();
+    }
+
+    var element = elementConstructor();
+    element.onload = callback;
+
+    window.Ractive.injects.push(name);
+    document.getElementsByTagName('head')[0].appendChild(element);
+  }
+
+  function _injectJS(name, file, callback) {
+    _inject(name, file, function() {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = file;
+
+      return script;
+    }, callback);
+  }
+
+  function _injectCSS(name, file, callback) {
+    _inject(name, file, function() {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = file;
+
+      return link;
+    }, callback);
+  }
+
   window.Ractive.templates = window.Ractive.templates || {};
+  window.Ractive.injects = window.Ractive.injects || [];
+
+  window.Ractive.require = function(name, file) {
+    var extension = null;
+
+    if (!name) {
+      throw new Error('You have to specify a file/name');
+    }
+
+    file = file || name;
+
+    extension = (file.split('.').pop() || '').toLowerCase();
+    if (extension == 'js') {
+      return new window.Ractive.Promise(function(fulfil) {
+        _injectJS(name, file, fulfil);
+      });
+    }
+    else if (extension == 'css') {
+      return new window.Ractive.Promise(function(fulfil) {
+        _injectCSS(name, file, fulfil);
+      });
+    }
+  };
 
   window.Ractive.prototype.require = function(name) {
     name = name || null;
