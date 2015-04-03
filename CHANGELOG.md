@@ -7,6 +7,16 @@ Versions details history. For each version you can find:
 * Link to the release branch
 * All of the modifications details
 
+<a name="0.2.0"></a>
+# 0.2.0 (2015-04-03)
+
+[Release 0.2.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.0) - [Branch release/0.2.0](https://github.com/XavierBoubert/ractive-require/tree/0.2.0)
+
+### Breeaking changes
+
+- **ractive-require**
+  - Add Ractive.require to inject JS and CSS files
+
 <a name="0.1.1"></a>
 # 0.1.1 (2015-03-24)
 
