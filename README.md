@@ -21,6 +21,7 @@ Or copy the [dist](https://github.com/XavierBoubert/ractive-require/tree/master/
 
  - [Introduction](#introduction)
  - [Require a feature](#require)
+ - [Require a file](#require-file)
  - [Control a feature](#control)
  - [Cache](#cache)
  - [Only HTML](#only-html)
@@ -78,6 +79,28 @@ Firstly, Ractive-Require adds to the ```<head>``` element:
 Then it gets the ```components/button.html``` template. The feature is loaded.
 
 The HTML template will still continues to be a Mustache template with data-binding, but for now, it's just a string.
+
+### <a name="require-file"></a> Require a file
+
+In your JavaScript files, you can require an other JavaScript file or a CSS file. Just continue to use ```Ractive.require()``` but with a file path:
+
+```javascript
+
+// Inject the js file
+Ractive.require('/public/jquery.js');
+
+// The return is a Promise
+Ractive.require('/public/jquery.js').then(function() {
+  // ...
+});
+
+// You can add a name to avoid many injections of the same file.
+// Otherwise, it's the filename wich is used as name.
+Ractive.require('jquery', /public/jquery.js');
+
+// It works for JS and CSS files
+Ractive.require('/public/styles.css');
+```
 
 ### <a name="control"></a> Control a feature
 
