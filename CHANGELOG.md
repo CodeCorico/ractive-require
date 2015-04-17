@@ -12,7 +12,7 @@ Versions details history. For each version you can find:
 
 [Release 0.2.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.0) - [Branch release/0.2.0](https://github.com/XavierBoubert/ractive-require/tree/0.2.0)
 
-### Breeaking changes
+### Breaking changes
 
 - **ractive-require**
   - Add Ractive.require to inject JS and CSS files
@@ -22,7 +22,7 @@ Versions details history. For each version you can find:
 
 [Release 0.1.1](https://github.com/XavierBoubert/ractive-require/releases/tag/0.1.1) - [Branch release/0.1.1](https://github.com/XavierBoubert/ractive-require/tree/0.1.1)
 
-### Breeaking changes
+### Breaking changes
 
 - **ractive-require**
   - Add header metadata for dist files
@@ -34,7 +34,7 @@ Versions details history. For each version you can find:
 
 [Release 0.1.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.1.0) - [Branch release/0.1.0](https://github.com/XavierBoubert/ractive-require/tree/0.1.0)
 
-### Breeaking changes
+### Breaking changes
 
 - **ractive-require**
   - Creation
