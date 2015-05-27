@@ -325,6 +325,12 @@
             }
           });
         }
+        else {
+          --count;
+          if (count < 1) {
+            fulfil();
+          }
+        }
       });
 
     });
