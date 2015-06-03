@@ -307,15 +307,15 @@
     return new window.Ractive.Promise(function(fulfil) {
 
       var elements = name ?
-            _this.findAll('rv-require[src][ondemand="' + name + '"]:not([loaded="true"])') :
-            _this.findAll('rv-require[src]:not([loaded="true"]):not([ondemand])'),
+            _this.el.querySelectorAll('rv-require[src][ondemand="' + name + '"]:not([loaded="true"])') :
+            _this.el.querySelectorAll('rv-require[src]:not([loaded="true"]):not([ondemand])'),
           count = elements.length;
 
       if (count < 1) {
         return fulfil();
       }
 
-      elements.forEach(function(element) {
+      [].forEach.call(elements, function(element) {
 
         if (_inScope(element, _this.el)) {
           _requireElement(_this, element, function() {
