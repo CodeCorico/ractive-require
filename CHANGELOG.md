@@ -7,6 +7,16 @@ Versions details history. For each version you can find:
 * Link to the release branch
 * All of the modifications details
 
+<a name="0.2.3"></a>
+# 0.2.3 (2015-06-03)
+
+[Release 0.2.3](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.3) - [Branch release/0.2.3](https://github.com/XavierBoubert/ractive-require/tree/0.2.3)
+
+### Breaking changes
+
+- **ractive-require**
+  - Fix rv-require selector qby using uerySelectorAll() instead of broken Ractive findAll()
+
 <a name="0.2.2"></a>
 # 0.2.2 (2015-05-27)
 
