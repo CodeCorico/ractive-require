@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.2.1). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.2.2). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -395,15 +395,15 @@
     return new window.Ractive.Promise(function(fulfil) {
 
       var elements = name ?
-            _this.findAll('rv-require[src][ondemand="' + name + '"]:not([loaded="true"])') :
-            _this.findAll('rv-require[src]:not([loaded="true"]):not([ondemand])'),
+            _this.el.querySelectorAll('rv-require[src][ondemand="' + name + '"]:not([loaded="true"])') :
+            _this.el.querySelectorAll('rv-require[src]:not([loaded="true"]):not([ondemand])'),
           count = elements.length;
 
       if (count < 1) {
         return fulfil();
       }
 
-      elements.forEach(function(element) {
+      [].forEach.call(elements, function(element) {
 
         if (_inScope(element, _this.el)) {
           _requireElement(_this, element, function() {
