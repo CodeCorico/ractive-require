@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.2.2). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.2.4). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -68,19 +68,23 @@
     }
   };
 
-  function _callControllers(controllers, Component, data, el, config, i) {
-    i = i || 0;
-
+  function _callControllers(controllers, Component, data, el, config, i, callback) {
     if (i < controllers.length) {
       controllers[i](Component, data, el, config, function() {
-        _callControllers(controllers, Component, data, el, config, ++i);
+        _callControllers(controllers, Component, data, el, config, ++i, callback);
       });
+    }
+    else if (callback) {
+      callback();
     }
   }
 
-  window.Ractive.fireController = function(name, Component, data, el, config) {
+  window.Ractive.fireController = function(name, Component, data, el, config, callback) {
     if (_controllers[name]) {
-      _callControllers(_controllers[name], Component, data, el, config);
+      _callControllers(_controllers[name], Component, data, el, config, 0, callback);
+    }
+    else if (callback) {
+      callback();
     }
   };
 
@@ -306,11 +310,12 @@
         }, databinding.data, element, {
           template: template,
           partials: partials
+        }, function() {
+          if (callback) {
+            callback();
+          }
         });
 
-        if (callback) {
-          callback();
-        }
       });
   }
 
