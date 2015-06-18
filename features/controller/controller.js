@@ -11,19 +11,23 @@
     }
   };
 
-  function _callControllers(controllers, Component, data, el, config, i) {
-    i = i || 0;
-
+  function _callControllers(controllers, Component, data, el, config, i, callback) {
     if (i < controllers.length) {
       controllers[i](Component, data, el, config, function() {
-        _callControllers(controllers, Component, data, el, config, ++i);
+        _callControllers(controllers, Component, data, el, config, ++i, callback);
       });
+    }
+    else if (callback) {
+      callback();
     }
   }
 
-  window.Ractive.fireController = function(name, Component, data, el, config) {
+  window.Ractive.fireController = function(name, Component, data, el, config, callback) {
     if (_controllers[name]) {
-      _callControllers(_controllers[name], Component, data, el, config);
+      _callControllers(_controllers[name], Component, data, el, config, 0, callback);
+    }
+    else if (callback) {
+      callback();
     }
   };
 
