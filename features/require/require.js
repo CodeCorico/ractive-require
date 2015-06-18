@@ -218,11 +218,12 @@
         }, databinding.data, element, {
           template: template,
           partials: partials
+        }, function() {
+          if (callback) {
+            callback();
+          }
         });
 
-        if (callback) {
-          callback();
-        }
       });
   }
 
