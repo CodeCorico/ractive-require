@@ -200,6 +200,26 @@
     });
   }
 
+  function _findChild(ractive, attribute, value) {
+    for (var i = 0; i < ractive.childrenRequire.length; i++) {
+      if (ractive.childrenRequire[i].el.getAttribute(attribute) == value) {
+        return ractive.childrenRequire[i];
+      }
+    }
+
+    return null;
+  }
+
+  function _findParent(ractive, attribute, value) {
+    for (var i = 0; i < ractive.parentRequire.length; i++) {
+      if (ractive.parentRequire[i].el.getAttribute(attribute) == value) {
+        return ractive.parentRequire[i];
+      }
+    }
+
+    return null;
+  }
+
   function _requireElement(parent, element, callback, forceNoScript, forceNoCSS) {
     forceNoScript = forceNoScript || false;
 
@@ -304,6 +324,15 @@
           });
 
           ractive.childrenRequire = [];
+
+          ractive.findParent = function(attribute, value) {
+            return _findParent(ractive, attribute, value);
+          };
+
+          ractive.findChild = function(attribute, value) {
+            return _findChild(ractive, attribute, value);
+          };
+
           parent.childrenRequire.push(ractive);
 
           return ractive;
