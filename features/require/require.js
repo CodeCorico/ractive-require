@@ -202,6 +202,7 @@
 
           for (bind in databinding.binds) {
             observers.push(_createObserver(parent, ractive, bind, databinding.binds[bind]));
+            observers.push(_createObserver(ractive, parent, databinding.binds[bind], bind));
           }
 
           ractive.on('teardown', function() {
