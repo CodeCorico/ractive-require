@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.2.4). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.4.0). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -294,6 +294,7 @@
 
           for (bind in databinding.binds) {
             observers.push(_createObserver(parent, ractive, bind, databinding.binds[bind]));
+            observers.push(_createObserver(ractive, parent, databinding.binds[bind], bind));
           }
 
           ractive.on('teardown', function() {
