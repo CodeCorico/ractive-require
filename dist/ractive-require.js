@@ -220,6 +220,32 @@
     return null;
   }
 
+  function _cleanCls(element, cls, add, remove) {
+    var className = element.className || '',
+        newClassName = [];
+
+    className.split(' ').map(function(clsName) {
+      clsName = clsName.trim();
+      if (clsName && ((!add && !remove) || clsName != cls)) {
+        newClassName.push(clsName);
+      }
+    });
+
+    if (add) {
+      newClassName.push(cls);
+    }
+
+    element.className = newClassName.join(' ');
+  }
+
+  function _addCls(element, cls) {
+    _cleanCls(element, cls, true);
+  }
+
+  function _removeCls(element, cls) {
+    _cleanCls(element, cls, false, true);
+  }
+
   function _requireElement(parent, element, callback, forceNoScript, forceNoCSS) {
     forceNoScript = forceNoScript || false;
 
@@ -237,6 +263,7 @@
     }
 
     element.setAttribute('loaded', 'true');
+    _addCls(element, 'rv-require-loaded');
 
     if (!window.Ractive.templates[name]) {
 
@@ -265,7 +292,8 @@
     }
 
     var template = window.Ractive.templates[name],
-        databinding = _fetchDataBinding(element, parent);
+        databinding = _fetchDataBinding(element, parent),
+        initialHTML = element.innerHTML;
 
     _fetchPartials(element, parent)
       .then(function(partials) {
@@ -297,7 +325,12 @@
             observers.push(_createObserver(ractive, parent, databinding.binds[bind], bind));
           }
 
-          ractive.on('teardown', function() {
+          var teardownEvent = ractive.on('teardown', function() {
+            teardownEvent.cancel();
+
+            element.removeAttribute('loaded');
+            _removeCls(element, 'rv-require-loaded');
+
             ractive.parentRequire = null;
 
             var i;
@@ -322,6 +355,9 @@
                 ractive.childrenRequire[i].teardown();
               }
             }
+
+            element.innerHTML = initialHTML;
+            ractive = null;
           });
 
           ractive.childrenRequire = [];
