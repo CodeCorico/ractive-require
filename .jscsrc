@@ -6,6 +6,10 @@
   "disallowImplicitTypeConversion": ["string"],
 
   "disallowMultipleVarDecl": null,
+  "disallowTrailingComma": true,
+  "disallowKeywordsOnNewLine": null,
+  "requireTrailingComma": null,
+  "requirePaddingNewLinesAfterBlocks": null,
   "requireLineBreakAfterVariableAssignment": true,
   "requireBlocksOnNewline": true,
   "requireKeywordsOnNewLine": [
