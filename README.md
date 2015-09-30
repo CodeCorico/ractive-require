@@ -96,7 +96,7 @@ Ractive.require('/public/jquery.js').then(function() {
 
 // You can add a name to avoid many injections of the same file.
 // Otherwise, it's the filename wich is used as name.
-Ractive.require('jquery', /public/jquery.js');
+Ractive.require('jquery', '/public/jquery.js');
 
 // It works for JS and CSS files
 Ractive.require('/public/styles.css');
@@ -282,7 +282,7 @@ In a feature or partial template, all of the next ```src``` attributes of the ``
 
 When you fire a ```ractive.teardown()``` of a feature, it fires all of its children teardown after it cleans the DOM.
 
-But your ```<rv-require>``` is still there. So you can re-use ```ractive = new Feature()``` on it.
+Your ```<rv-require>``` is reseted but still on the DOM. So you can re-use ```.require()``` on its parent to re-fire its controller.
 
 ## Contribute
 
