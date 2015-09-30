@@ -173,7 +173,8 @@
     }
 
     var template = window.Ractive.templates[name],
-        databinding = _fetchDataBinding(element, parent);
+        databinding = _fetchDataBinding(element, parent),
+        initialHTML = element.innerHTML;
 
     _fetchPartials(element, parent)
       .then(function(partials) {
@@ -206,6 +207,8 @@
           }
 
           ractive.on('teardown', function() {
+            element.removeAttribute('loaded');
+
             ractive.parentRequire = null;
 
             var i;
@@ -230,6 +233,8 @@
                 ractive.childrenRequire[i].teardown();
               }
             }
+
+            element.innerHTML = initialHTML;
           });
 
           ractive.childrenRequire = [];
