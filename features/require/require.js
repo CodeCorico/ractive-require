@@ -128,6 +128,32 @@
     return null;
   }
 
+  function _cleanCls(element, cls, add, remove) {
+    var className = element.className || '',
+        newClassName = [];
+
+    className.split(' ').map(function(clsName) {
+      clsName = clsName.trim();
+      if (clsName && ((!add && !remove) || clsName != cls)) {
+        newClassName.push(clsName);
+      }
+    });
+
+    if (add) {
+      newClassName.push(cls);
+    }
+
+    element.className = newClassName.join(' ');
+  }
+
+  function _addCls(element, cls) {
+    _cleanCls(element, cls, true);
+  }
+
+  function _removeCls(element, cls) {
+    _cleanCls(element, cls, false, true);
+  }
+
   function _requireElement(parent, element, callback, forceNoScript, forceNoCSS) {
     forceNoScript = forceNoScript || false;
 
@@ -145,6 +171,7 @@
     }
 
     element.setAttribute('loaded', 'true');
+    _addCls(element, 'rv-require-loaded');
 
     if (!window.Ractive.templates[name]) {
 
@@ -208,6 +235,7 @@
 
           ractive.on('teardown', function() {
             element.removeAttribute('loaded');
+            _removeCls(element, 'rv-require-loaded');
 
             ractive.parentRequire = null;
 
