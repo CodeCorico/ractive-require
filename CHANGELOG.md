@@ -1,12 +1,5 @@
 # Ractive-Require - Changelog
 
-Versions details history. For each version you can find:
-* Name an version number
-* Date published
-* Link to the release tag
-* Link to the release branch
-* All of the modifications details
-
 <a name="0.5.0"></a>
 # 0.5.0 (2015-09-30)
 
