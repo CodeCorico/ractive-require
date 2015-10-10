@@ -13,7 +13,7 @@ Use the CDN version:
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ractive-require/0.5.0/ractive-require.min.js"></script>
 ```
 
-Or copy the [dist](https://github.com/XavierBoubert/ractive-require/tree/master/dist) folder into your project and include ```ractive-require.js``` or ```ractive-require.min.js``` (production) file in your HTML page **after** Ractive.
+Or copy the [dist](https://github.com/CodeCorico/ractive-require/tree/master/dist) folder into your project and include ```ractive-require.js``` or ```ractive-require.min.js``` (production) file in your HTML page **after** Ractive.
 
 ## Documentation
 
@@ -21,7 +21,7 @@ Go to [ractive-require.codecorico.com](http://ractive-require.codecorico.com)
 
 ## Contribute
 
-To contribute to the project, read the [Contribution guidelines](https://github.com/XavierBoubert/ractive-require/blob/master/CONTRIBUTING.md).
+To contribute to the project, read the [Contribution guidelines](https://github.com/CodeCorico/ractive-require/blob/master/CONTRIBUTING.md).
 After that, you can create your own Pull Requests (PR) and submit them here.
 
 ## Lead contribution team

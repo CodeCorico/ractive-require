@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglifyjs'),
     insert = require('gulp-insert'),
     packagejson = require('./package.json'),
-    header = '/*! Ractive-Require (' + packagejson.version + '). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */\r\n',
+    header = '/*! Ractive-Require (' + packagejson.version + '). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */\r\n',
     files = [
       'features/get/get.js',
       'features/controller/controller.js',

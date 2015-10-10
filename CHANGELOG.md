@@ -3,7 +3,7 @@
 <a name="0.5.0"></a>
 # 0.5.0 (2015-09-30)
 
-[Release 0.5.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.5.0)
+[Release 0.5.0](https://github.com/CodeCorico/ractive-require/releases/tag/0.5.0)
 
 ### Breaking changes
 
@@ -14,7 +14,7 @@
 <a name="0.4.0"></a>
 # 0.4.0 (2015-09-09)
 
-[Release 0.4.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.4.0)
+[Release 0.4.0](https://github.com/CodeCorico/ractive-require/releases/tag/0.4.0)
 
 ### Breaking changes
 
@@ -24,7 +24,7 @@
 <a name="0.3.0"></a>
 # 0.3.0 (2015-09-08)
 
-[Release 0.3.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.3.0)
+[Release 0.3.0](https://github.com/CodeCorico/ractive-require/releases/tag/0.3.0)
 
 ### Breaking changes
 
@@ -34,7 +34,7 @@
 <a name="0.2.4"></a>
 # 0.2.4 (2015-06-18)
 
-[Release 0.2.4](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.4)
+[Release 0.2.4](https://github.com/CodeCorico/ractive-require/releases/tag/0.2.4)
 
 ### Breaking changes
 
@@ -44,7 +44,7 @@
 <a name="0.2.3"></a>
 # 0.2.3 (2015-06-03)
 
-[Release 0.2.3](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.3)
+[Release 0.2.3](https://github.com/CodeCorico/ractive-require/releases/tag/0.2.3)
 
 ### Breaking changes
 
@@ -54,7 +54,7 @@
 <a name="0.2.2"></a>
 # 0.2.2 (2015-05-27)
 
-[Release 0.2.2](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.2)
+[Release 0.2.2](https://github.com/CodeCorico/ractive-require/releases/tag/0.2.2)
 
 ### Breaking changes
 
@@ -64,7 +64,7 @@
 <a name="0.2.1"></a>
 # 0.2.1 (2015-05-27)
 
-[Release 0.2.1](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.1)
+[Release 0.2.1](https://github.com/CodeCorico/ractive-require/releases/tag/0.2.1)
 
 ### Breaking changes
 
@@ -74,7 +74,7 @@
 <a name="0.2.0"></a>
 # 0.2.0 (2015-04-03)
 
-[Release 0.2.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.2.0)
+[Release 0.2.0](https://github.com/CodeCorico/ractive-require/releases/tag/0.2.0)
 
 ### Breaking changes
 
@@ -84,7 +84,7 @@
 <a name="0.1.1"></a>
 # 0.1.1 (2015-03-24)
 
-[Release 0.1.1](https://github.com/XavierBoubert/ractive-require/releases/tag/0.1.1)
+[Release 0.1.1](https://github.com/CodeCorico/ractive-require/releases/tag/0.1.1)
 
 ### Breaking changes
 
@@ -96,7 +96,7 @@
 <a name="0.1.0"></a>
 # 0.1.0 (2015-03-23)
 
-[Release 0.1.0](https://github.com/XavierBoubert/ractive-require/releases/tag/0.1.0)
+[Release 0.1.0](https://github.com/CodeCorico/ractive-require/releases/tag/0.1.0)
 
 ### Breaking changes
 
