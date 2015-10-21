@@ -205,15 +205,15 @@
 
     if (!window.Ractive.templates[name]) {
 
-      if (!noScript) {
-        return window.Ractive.require(src + '.js').then(function() {
-          _requireElement(parent, element, callback, true, noCSS);
-        });
-      }
-
       if (!noCSS) {
         return window.Ractive.require(src + '.css').then(function() {
           _requireElement(parent, element, callback, noScript, true);
+        });
+      }
+
+      if (!noScript) {
+        return window.Ractive.require(src + '.js').then(function() {
+          _requireElement(parent, element, callback, true, noCSS);
         });
       }
 
