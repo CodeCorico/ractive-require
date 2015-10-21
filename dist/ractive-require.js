@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.4.0). (C) 2015 Xavier Boubert. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.5.1). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -68,10 +68,10 @@
     }
   };
 
-  function _callControllers(controllers, Component, data, el, config, i, callback) {
+  function _callControllers(controllers, component, data, el, config, i, callback) {
     if (i < controllers.length) {
-      controllers[i](Component, data, el, config, function() {
-        _callControllers(controllers, Component, data, el, config, ++i, callback);
+      controllers[i](component, data, el, config, function done() {
+        _callControllers(controllers, component, data, el, config, ++i, callback);
       });
     }
     else if (callback) {
@@ -79,9 +79,9 @@
     }
   }
 
-  window.Ractive.fireController = function(name, Component, data, el, config, callback) {
+  window.Ractive.fireController = function(name, component, data, el, config, callback) {
     if (_controllers[name]) {
-      _callControllers(_controllers[name], Component, data, el, config, 0, callback);
+      _callControllers(_controllers[name], component, data, el, config, 0, callback);
     }
     else if (callback) {
       callback();
@@ -200,24 +200,54 @@
     });
   }
 
-  function _findChild(ractive, attribute, value) {
-    for (var i = 0; i < ractive.childrenRequire.length; i++) {
-      if (ractive.childrenRequire[i].el.getAttribute(attribute) == value) {
-        return ractive.childrenRequire[i];
+  function _findChilden(ractive, attribute, value, onlyOne) {
+    var children = [];
+
+    if (ractive.childrenRequire && ractive.childrenRequire.length) {
+      for (var i = 0; i < ractive.childrenRequire.length; i++) {
+        if (ractive.childrenRequire[i].el.getAttribute(attribute) == value) {
+          if (onlyOne) {
+            return ractive.childrenRequire[i];
+          }
+
+          children.push(ractive.childrenRequire[i]);
+        }
+
+        var nextChildren = _findChilden(ractive.childrenRequire[i], attribute, value, onlyOne);
+        if (onlyOne && nextChildren) {
+          return nextChildren;
+        }
+        else if (!onlyOne && nextChildren.length) {
+          children = children.concat(nextChildren);
+        }
       }
     }
 
-    return null;
+    return onlyOne ? null : children;
   }
 
-  function _findParent(ractive, attribute, value) {
-    for (var i = 0; i < ractive.parentRequire.length; i++) {
-      if (ractive.parentRequire[i].el.getAttribute(attribute) == value) {
-        return ractive.parentRequire[i];
+  function _findParents(ractive, attribute, value, onlyOne) {
+    var parents = [];
+
+    if (ractive.parentRequire) {
+      if (ractive.parentRequire.el.getAttribute(attribute) == value) {
+        if (onlyOne) {
+          return ractive.parentRequire;
+        }
+
+        parents.push(ractive.parentRequire);
+      }
+
+      var nextParent = _findParents(ractive.parentRequire, attribute, value, onlyOne);
+      if (onlyOne && nextParent) {
+        return nextParent;
+      }
+      else if (!onlyOne && nextParent.length) {
+        parents = parents.concat(nextParent);
       }
     }
 
-    return null;
+    return onlyOne ? null : parents;
   }
 
   function _cleanCls(element, cls, add, remove) {
@@ -267,15 +297,15 @@
 
     if (!window.Ractive.templates[name]) {
 
-      if (!noScript) {
-        return window.Ractive.require(src + '.js').then(function() {
-          _requireElement(parent, element, callback, true, noCSS);
-        });
-      }
-
       if (!noCSS) {
         return window.Ractive.require(src + '.css').then(function() {
           _requireElement(parent, element, callback, noScript, true);
+        });
+      }
+
+      if (!noScript) {
+        return window.Ractive.require(src + '.js').then(function() {
+          _requireElement(parent, element, callback, true, noCSS);
         });
       }
 
@@ -300,7 +330,7 @@
 
         element.innerHTML = '';
 
-        window.Ractive.fireController(name, function Component(config) {
+        window.Ractive.fireController(name, function component(config) {
           config = config || {};
 
           config.el = config.el || element;
@@ -325,9 +355,7 @@
             observers.push(_createObserver(ractive, parent, databinding.binds[bind], bind));
           }
 
-          var teardownEvent = ractive.on('teardown', function() {
-            teardownEvent.cancel();
-
+          ractive.on('teardown', function() {
             element.removeAttribute('loaded');
             _removeCls(element, 'rv-require-loaded');
 
@@ -357,18 +385,32 @@
             }
 
             element.innerHTML = initialHTML;
-            ractive = null;
           });
 
           ractive.childrenRequire = [];
 
-          ractive.findParent = function(attribute, value) {
-            return _findParent(ractive, attribute, value);
-          };
+          var methodsToElements = [ractive];
+          if (!parent.findParents) {
+            methodsToElements.push(parent);
+          }
 
-          ractive.findChild = function(attribute, value) {
-            return _findChild(ractive, attribute, value);
-          };
+          methodsToElements.forEach(function(methodsToElement) {
+            methodsToElement.findParents = function(attribute, value) {
+              return _findParents(methodsToElement, attribute, value);
+            };
+
+            methodsToElement.findParent = function(attribute, value) {
+              return _findParents(methodsToElement, attribute, value, true);
+            };
+
+            methodsToElement.findChildren = function(attribute, value) {
+              return _findChilden(methodsToElement, attribute, value);
+            };
+
+            methodsToElement.findChild = function(attribute, value) {
+              return _findChilden(methodsToElement, attribute, value, true);
+            };
+          });
 
           parent.childrenRequire.push(ractive);
 
