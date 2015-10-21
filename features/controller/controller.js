@@ -13,7 +13,7 @@
 
   function _callControllers(controllers, component, data, el, config, i, callback) {
     if (i < controllers.length) {
-      controllers[i](component, data, el, config, function() {
+      controllers[i](component, data, el, config, function done() {
         _callControllers(controllers, component, data, el, config, ++i, callback);
       });
     }
