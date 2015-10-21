@@ -1,5 +1,21 @@
 # Ractive-Require - Changelog
 
+<a name="0.5.1"></a>
+# 0.5.1 (2015-10-21)
+
+[Release 0.5.1](https://github.com/CodeCorico/ractive-require/releases/tag/0.5.1)
+
+### Hotfixes
+
+- **ractive-require**
+  - Fix .findChild() and .findParent() instance methods.
+
+### Breaking changes
+
+- **ractive-require**
+  - Add .findChildren() and .findParents() instance methods.
+  - Add .find*() instance methods to the parents that don't have them.
+
 <a name="0.5.0"></a>
 # 0.5.0 (2015-09-30)
 
