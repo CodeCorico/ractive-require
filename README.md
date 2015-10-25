@@ -24,6 +24,27 @@ Go to [ractive-require.codecorico.com](http://ractive-require.codecorico.com)
 To contribute to the project, read the [Contribution guidelines](https://github.com/CodeCorico/ractive-require/blob/master/CONTRIBUTING.md).
 After that, you can create your own Pull Requests (PR) and submit them here.
 
+## Build the distribution files
+
+If you want to hack on Ractive-Require, the first step is to clone the repo and install all its development dependencies:
+
+```
+git clone https://github.com/CodeCorico/ractive-require   # or your fork
+ractive-require
+npm install
+```
+
+You have to install **gulp**
+```
+npm install gulp -g
+```
+
+Then you can build the distribution files with:
+```
+gulp build
+```
+
+
 ## Lead contribution team
 
 * [Xavier Boubert](http://xavierboubert.fr) [@xavierboubert](http://twitter.com/XavierBoubert)
