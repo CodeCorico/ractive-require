@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.5.1). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.5.2). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -355,7 +355,7 @@
             observers.push(_createObserver(ractive, parent, databinding.binds[bind], bind));
           }
 
-          ractive.on('teardown', function() {
+          ractive.on('unrender', function() {
             element.removeAttribute('loaded');
             _removeCls(element, 'rv-require-loaded');
 
