@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.5.2"></a>
+# 0.5.2 (2015-10-25)
+
+[Release 0.5.2](https://github.com/CodeCorico/ractive-require/releases/tag/0.5.2)
+
+### Hotfixes
+
+- **ractive-require**
+  - Teardown the require children before teardown itself (base on "unrender" event).
+
 <a name="0.5.1"></a>
 # 0.5.1 (2015-10-21)
 
