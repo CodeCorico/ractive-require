@@ -263,7 +263,7 @@
             observers.push(_createObserver(ractive, parent, databinding.binds[bind], bind));
           }
 
-          ractive.on('teardown', function() {
+          ractive.on('unrender', function() {
             element.removeAttribute('loaded');
             _removeCls(element, 'rv-require-loaded');
 
