@@ -22,9 +22,16 @@
     }
   }
 
-  window.Ractive.fireController = function(name, component, data, el, config, callback) {
+  window.Ractive.fireController = function(name, component, data, el, config, callback, tries) {
+    tries = (tries || 0) + 1;
+
     if (_controllers[name]) {
       _callControllers(_controllers[name], component, data, el, config, 0, callback);
+    }
+    else if (tries < 500) {
+      setTimeout(function() {
+        window.Ractive.fireController(name, component, data, el, config, callback, tries);
+      }, 10);
     }
     else if (callback) {
       callback();
