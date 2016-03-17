@@ -293,7 +293,9 @@
                 ractive.childrenRequire[i].teardown();
               }
             }
+          });
 
+          ractive.on('teardown', function() {
             element.innerHTML = initialHTML;
           });
 
