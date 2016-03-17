@@ -271,8 +271,10 @@
 
             var i;
 
-            for (i = 0; i < observers.length; i++) {
-              observers[i].cancel();
+            if (observers && observers.length) {
+              for (i = 0; i < observers.length; i++) {
+                observers[i].cancel();
+              }
             }
 
             observers = null;
@@ -286,7 +288,7 @@
               }
             }
 
-            if (ractive.childrenRequire) {
+            if (ractive.childrenRequire && ractive.childrenRequire.length) {
               for (i = ractive.childrenRequire.length - 1; i >= 0; i--) {
                 ractive.childrenRequire[i].teardown();
               }
