@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.5.2). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.5.3). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -79,9 +79,16 @@
     }
   }
 
-  window.Ractive.fireController = function(name, component, data, el, config, callback) {
+  window.Ractive.fireController = function(name, component, data, el, config, callback, tries) {
+    tries = (tries || 0) + 1;
+
     if (_controllers[name]) {
       _callControllers(_controllers[name], component, data, el, config, 0, callback);
+    }
+    else if (tries < 500) {
+      setTimeout(function() {
+        window.Ractive.fireController(name, component, data, el, config, callback, tries);
+      }, 10);
     }
     else if (callback) {
       callback();
@@ -363,8 +370,10 @@
 
             var i;
 
-            for (i = 0; i < observers.length; i++) {
-              observers[i].cancel();
+            if (observers && observers.length) {
+              for (i = 0; i < observers.length; i++) {
+                observers[i].cancel();
+              }
             }
 
             observers = null;
@@ -378,12 +387,14 @@
               }
             }
 
-            if (ractive.childrenRequire) {
+            if (ractive.childrenRequire && ractive.childrenRequire.length) {
               for (i = ractive.childrenRequire.length - 1; i >= 0; i--) {
                 ractive.childrenRequire[i].teardown();
               }
             }
+          });
 
+          ractive.on('teardown', function() {
             element.innerHTML = initialHTML;
           });
 
