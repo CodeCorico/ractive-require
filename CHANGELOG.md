@@ -1,5 +1,18 @@
 # Ractive-Require - Changelog
 
+<a name="0.5.3"></a>
+# 0.5.3 (2016-03-17)
+
+[Release 0.5.3](https://github.com/CodeCorico/ractive-require/releases/tag/0.5.3)
+
+### Hotfixes
+
+- **controller**
+  - Wait for the controller registration on firing
+
+- **require**
+  - Use teardown event to go back to initial HTML
+
 <a name="0.5.2"></a>
 # 0.5.2 (2015-10-25)
 
@@ -7,7 +20,7 @@
 
 ### Hotfixes
 
-- **ractive-require**
+- **require**
   - Teardown the require children before teardown itself (base on "unrender" event).
 
 <a name="0.5.1"></a>
@@ -17,12 +30,12 @@
 
 ### Hotfixes
 
-- **ractive-require**
+- **require**
   - Fix .findChild() and .findParent() instance methods.
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Add .findChildren() and .findParents() instance methods.
   - Add .find*() instance methods to the parents that don't have them.
 
@@ -33,8 +46,8 @@
 
 ### Breaking changes
 
-- **ractive-require**
-  - Reset the rv-require element on teardown. It's controller will be fired again on .require().
+- **require**
+  - Reset the rv-require element on teardown. Its controller will be fired again on .require().
   - Add the "rv-require-loaded" CSS class when the rv-require element is active
 
 <a name="0.4.0"></a>
@@ -44,7 +57,7 @@
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Support double data-binding on "data-bind-*" attributes.
 
 <a name="0.3.0"></a>
@@ -54,7 +67,7 @@
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Add findChild() and findParent() methods to a ractive element.
 
 <a name="0.2.4"></a>
@@ -64,7 +77,7 @@
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Return require.then() callback only when all subchildren are required
 
 <a name="0.2.3"></a>
@@ -74,8 +87,8 @@
 
 ### Breaking changes
 
-- **ractive-require**
-  - Fix rv-require selector qby using uerySelectorAll() instead of broken Ractive findAll()
+- **require**
+  - Fix rv-require selector by using uerySelectorAll() instead of broken Ractive findAll()
 
 <a name="0.2.2"></a>
 # 0.2.2 (2015-05-27)
@@ -94,7 +107,7 @@
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Fix bug when rv-ractive is inside a rv-ractive not loaded
 
 <a name="0.2.0"></a>
@@ -104,7 +117,7 @@
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Add Ractive.require to inject JS and CSS files
 
 <a name="0.1.1"></a>
@@ -114,7 +127,7 @@
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Add header metadata for dist files
   - Observe parent changes with data-bind-*
   - Apply absolute url to all "src" attributes in remote templates
