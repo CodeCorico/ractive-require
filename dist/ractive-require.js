@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.5.3). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.5.4). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -80,12 +80,12 @@
   }
 
   window.Ractive.fireController = function(name, component, data, el, config, callback, tries) {
-    tries = (tries || 0) + 1;
+    tries = tries === false ? tries : (tries || 0) + 1;
 
     if (_controllers[name]) {
       _callControllers(_controllers[name], component, data, el, config, 0, callback);
     }
-    else if (tries < 500) {
+    else if (tries !== false && tries < 500) {
       setTimeout(function() {
         window.Ractive.fireController(name, component, data, el, config, callback, tries);
       }, 10);
