@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.5.4"></a>
+# 0.5.4 (2016-03-20)
+
+[Release 0.5.4](https://github.com/CodeCorico/ractive-require/releases/tag/0.5.4)
+
+### Hotfixes
+
+- **controller**
+  - Can force the controller to not waiting registration on firing
+
 <a name="0.5.3"></a>
 # 0.5.3 (2016-03-17)
 
