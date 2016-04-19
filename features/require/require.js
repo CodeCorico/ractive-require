@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function _requirePartial(rvPartial, callback) {
+  function _requirePartial(rvPartial, controllerName, callback) {
     var src = rvPartial.getAttribute('src') || false,
         target = rvPartial.getAttribute('target'),
         cache = rvPartial.getAttribute('cache') || 'false';
