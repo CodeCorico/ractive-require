@@ -1,21 +1,28 @@
 (function() {
   'use strict';
 
-  function _requirePartial(rvPartial, callback) {
+  function _requirePartial(rvPartial, controllerName, callback) {
     var src = rvPartial.getAttribute('src') || false,
-        target = rvPartial.getAttribute('target');
+        target = rvPartial.getAttribute('target'),
+        cache = rvPartial.getAttribute('cache') || 'false';
 
     if (!target) {
       return callback(false);
     }
 
     if (src) {
-      window.Ractive.getHtml(src)
-        .then(function(template) {
-          template = _applyAbsolutePath(template, src);
-
-          callback(target, template);
-        });
+      if(cache=='true' && window.Ractive.rv_partials[controllerName].hasOwnProperty(target)){
+        callback(target, window.Ractive.rv_partials[controllerName][target]);
+      }else{
+        window.Ractive.getHtml(src)
+          .then(function(template) {
+            template = _applyAbsolutePath(template, src);
+            if(cache=='true'){
+              window.Ractive.rv_partials[controllerName][target] = template;
+            }
+            callback(target, template);
+          });
+      }
 
       return;
     }
@@ -27,6 +34,7 @@
     return new window.Ractive.Promise(function(fulfil) {
       var partials = {},
           rvPartials = element.querySelectorAll('rv-partial'),
+          controllerName = element.getAttribute('name'),
           count = rvPartials.length,
           partialName;
 
@@ -39,7 +47,7 @@
       }
 
       Array.prototype.map.call(rvPartials, function(rvPartial) {
-        _requirePartial(rvPartial, function(target, template) {
+        _requirePartial(rvPartial, controllerName, function(target, template) {
           if (target) {
             partials[target] = template;
           }
@@ -222,6 +230,7 @@
           template = _applyAbsolutePath(template, src);
 
           window.Ractive.templates[name] = template;
+          window.Ractive.rv_partials[name] = {};
 
           _requireElement(parent, element, callback);
         });
@@ -387,6 +396,7 @@
 
   window.Ractive.templates = window.Ractive.templates || {};
   window.Ractive.injects = window.Ractive.injects || [];
+  window.Ractive.rv_partials = window.Ractive.rv_partials || {};
 
   window.Ractive.require = function(name, file) {
     var extension = null;
