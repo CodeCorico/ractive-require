@@ -54,27 +54,33 @@
   }
 
   function _fetchDataBinding(element, parent) {
-    var data = {},
-        binds = {},
+    var data   = {},
+        binds  = {},
+        events = {},
         attr,
         name;
 
     for (var i = 0; i < element.attributes.length; i++) {
       attr = element.attributes[i];
-      if (attr.name.indexOf('data-bind-') === 0) {
-        name = attr.name.substr(10, attr.name.length - 10);
-        data[name] = parent.get(attr.value);
+      if (attr.name.indexOf('data-on-') === 0){
+        name         = attr.name.substr(8, attr.name.length - 8);
+        events[name] = attr.value;
+      }
+      else if (attr.name.indexOf('data-bind-') === 0) {
+        name        = attr.name.substr(10, attr.name.length - 10);
+        data[name]  = parent.get(attr.value);
         binds[name] = attr.value;
       }
       else if (attr.name.indexOf('data-') === 0) {
-        name = attr.name.substr(5, attr.name.length - 5);
+        name       = attr.name.substr(5, attr.name.length - 5);
         data[name] = attr.value;
       }
     }
 
     return {
-      data: data,
-      binds: binds
+      data   :data,
+      binds  :binds,
+      events :events,
     };
   }
 
@@ -326,6 +332,10 @@
 
           parent.childrenRequire.push(ractive);
 
+          for (var event in databinding.events) {
+            _fireBindedEvent(parent, ractive, databinding, event);
+          }
+
           return ractive;
         }, databinding.data, element, {
           template: template,
@@ -337,6 +347,14 @@
         });
 
       });
+  }
+
+  function _fireBindedEvent(parent, ractive, databinding, event){
+    var eventName = databinding.events[event];
+
+    ractive.on(event, function(e){
+      parent.fire(eventName, e);
+    });
   }
 
   function _inScope(element, parent) {
