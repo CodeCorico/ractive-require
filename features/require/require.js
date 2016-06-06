@@ -331,10 +331,9 @@
             };
           });
 
-          parent.childrenRequire.push(ractive);
-
           _fireBindedEvent(parent, ractive, databinding);
 
+          parent.childrenRequire.push(ractive);
           return ractive;
         }, databinding.data, element, {
           template: template,
