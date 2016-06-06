@@ -54,33 +54,34 @@
   }
 
   function _fetchDataBinding(element, parent) {
-    var data   = {},
-        binds  = {},
+    var data = {},
+        binds = {},
         events = {},
         attr,
         name;
 
     for (var i = 0; i < element.attributes.length; i++) {
       attr = element.attributes[i];
-      if (attr.name.indexOf('data-on-') === 0){
-        name         = attr.name.substr(8, attr.name.length - 8);
+
+      if (attr.name.indexOf('data-on-') === 0) {
+        name = attr.name.substr(8, attr.name.length - 8);
         events[name] = attr.value;
       }
       else if (attr.name.indexOf('data-bind-') === 0) {
-        name        = attr.name.substr(10, attr.name.length - 10);
-        data[name]  = parent.get(attr.value);
+        name = attr.name.substr(10, attr.name.length - 10);
+        data[name] = parent.get(attr.value);
         binds[name] = attr.value;
       }
       else if (attr.name.indexOf('data-') === 0) {
-        name       = attr.name.substr(5, attr.name.length - 5);
+        name = attr.name.substr(5, attr.name.length - 5);
         data[name] = attr.value;
       }
     }
 
     return {
-      data   :data,
-      binds  :binds,
-      events :events,
+      data: data,
+      binds: binds,
+      events: events
     };
   }
 
@@ -347,7 +348,7 @@
       });
   }
 
-  function _fireBindedEvent(parent, ractive, databinding){
+  function _fireBindedEvent(parent, ractive, databinding) {
     var fireevent = function(name){
       ractive.on(event, function(e){
         parent.fire(name, e);
@@ -355,7 +356,7 @@
     }
 
     for (var event in databinding.events) {
-      if (!databinding.events.hasOwnProperty(event))
+      if (!databinding.events.hasOwnProperty(event)) {
         continue;
 
       fireevent(databinding.events[event]);
