@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.5.4). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.6.0). (C) 2015 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -155,12 +155,18 @@
   function _fetchDataBinding(element, parent) {
     var data = {},
         binds = {},
+        events = {},
         attr,
         name;
 
     for (var i = 0; i < element.attributes.length; i++) {
       attr = element.attributes[i];
-      if (attr.name.indexOf('data-bind-') === 0) {
+
+      if (attr.name.indexOf('data-on-') === 0) {
+        name = attr.name.substr(8, attr.name.length - 8);
+        events[name] = attr.value;
+      }
+      else if (attr.name.indexOf('data-bind-') === 0) {
         name = attr.name.substr(10, attr.name.length - 10);
         data[name] = parent.get(attr.value);
         binds[name] = attr.value;
@@ -173,7 +179,8 @@
 
     return {
       data: data,
-      binds: binds
+      binds: binds,
+      events: events
     };
   }
 
@@ -423,6 +430,8 @@
             };
           });
 
+          _fireBindedEvent(parent, ractive, databinding);
+
           parent.childrenRequire.push(ractive);
 
           return ractive;
@@ -436,6 +445,24 @@
         });
 
       });
+  }
+
+  function _fireBindedEvent(parent, ractive, databinding) {
+    var fireevent = function(event, name) {
+      ractive.on(event, function() {
+        Array.prototype.unshift.call(arguments, name);
+
+        parent.apply(parent, arguments);
+      });
+    };
+
+    for (var event in databinding.events) {
+      if (!databinding.events.hasOwnProperty(event)) {
+        continue;
+      }
+
+      fireevent(event, databinding.events[event]);
+    }
   }
 
   function _inScope(element, parent) {
