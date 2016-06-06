@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.0"></a>
+# 0.6.0 (2016-06-06)
+
+[Release 0.6.0](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.0)
+
+### Breaking changes
+
+- **require**
+  - Add data-on-* support to bind events between parent and children [#7 by @frostbane](https://github.com/CodeCorico/ractive-require/pull/7)
+
 <a name="0.5.4"></a>
 # 0.5.4 (2016-03-20)
 
