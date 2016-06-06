@@ -334,6 +334,7 @@
           _fireBindedEvent(parent, ractive, databinding);
 
           parent.childrenRequire.push(ractive);
+
           return ractive;
         }, databinding.data, element, {
           template: template,
@@ -348,17 +349,20 @@
   }
 
   function _fireBindedEvent(parent, ractive, databinding) {
-    var fireevent = function(name){
-      ractive.on(event, function(e){
-        parent.fire(name, e);
+    var fireevent = function(event, name) {
+      ractive.on(event, function() {
+        Array.prototype.unshift.call(arguments, name);
+
+        parent.apply(parent, arguments);
       });
-    }
+    };
 
     for (var event in databinding.events) {
       if (!databinding.events.hasOwnProperty(event)) {
         continue;
+      }
 
-      fireevent(databinding.events[event]);
+      fireevent(event, databinding.events[event]);
     }
   }
 
