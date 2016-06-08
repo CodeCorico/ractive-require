@@ -1,5 +1,25 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.2"></a>
+# 0.6.2 (2016-06-08)
+
+[Release 0.6.2](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.2)
+
+### Breaking changes
+
+- **require**
+  - Pass the component as second attribute in data-on-* [#9 by @frostbane](https://github.com/CodeCorico/ractive-require/pull/9)
+
+<a name="0.6.1"></a>
+# 0.6.1 (2016-06-08)
+
+[Release 0.6.1](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.1)
+
+### Hotfixes
+
+- **require**
+  - Fix .apply() targeting the parent instead of the fire method [#8 by @frostbane](https://github.com/CodeCorico/ractive-require/pull/8)
+
 <a name="0.6.0"></a>
 # 0.6.0 (2016-06-06)
 
