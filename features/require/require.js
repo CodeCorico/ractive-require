@@ -353,7 +353,7 @@
       ractive.on(event, function() {
         Array.prototype.unshift.call(arguments, name);
 
-        parent.apply(parent, arguments);
+        parent.fire.apply(parent, arguments);
       });
     };
 
