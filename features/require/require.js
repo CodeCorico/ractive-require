@@ -57,6 +57,7 @@
     var data = {},
         binds = {},
         events = {},
+        listening = {},
         attr,
         name;
 
@@ -66,6 +67,10 @@
       if (attr.name.indexOf('data-on-') === 0) {
         name = attr.name.substr(8, attr.name.length - 8);
         events[name] = attr.value;
+      }
+      else if (attr.name.indexOf('data-listen-') === 0) {
+        name = attr.name.substr(12, attr.name.length - 12);
+        listening[name] = attr.value;
       }
       else if (attr.name.indexOf('data-bind-') === 0) {
         name = attr.name.substr(10, attr.name.length - 10);
@@ -81,7 +86,8 @@
     return {
       data: data,
       binds: binds,
-      events: events
+      events: events,
+      listening: listening
     };
   }
 
@@ -331,6 +337,7 @@
             };
           });
 
+          _listenToParentEvent(parent, ractive, databinding);
           _fireBindedEvent(parent, ractive, databinding);
 
           parent.childrenRequire.push(ractive);
@@ -346,6 +353,25 @@
         });
 
       });
+  }
+
+  function _listenToParentEvent(parent, ractive, databinding){
+    var listenEvent = databinding.listening;
+
+    var fireLocalEvent = function(event){
+      parent.on(listenEvent[event], function(){
+        Array.prototype.unshift.call(arguments, event, listenEvent[event]);
+
+        ractive.fire.apply(ractive, arguments);
+      });
+    };
+
+    for(var event in listenEvent){
+      if(!listenEvent.hasOwnProperty(event))
+        continue;
+
+      fireLocalEvent(event);
+    }
   }
 
   function _fireBindedEvent(parent, ractive, databinding) {
