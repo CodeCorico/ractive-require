@@ -351,7 +351,7 @@
   function _fireBindedEvent(parent, ractive, databinding) {
     var fireevent = function(event, name) {
       ractive.on(event, function() {
-        Array.prototype.unshift.call(arguments, name);
+        Array.prototype.unshift.call(arguments, name, ractive);
 
         parent.fire.apply(parent, arguments);
       });
