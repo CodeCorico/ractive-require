@@ -10,7 +10,7 @@ Ractive-Require is an extension to [Ractive.js](http://ractivejs.org) that provi
 
 Use the CDN version:
 ```HTML
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ractive-require/0.6.2/ractive-require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ractive-require/0.6.3/ractive-require.min.js"></script>
 ```
 
 Or copy the [dist](https://github.com/CodeCorico/ractive-require/tree/master/dist) folder into your project and include ```ractive-require.js``` or ```ractive-require.min.js``` (production) file in your HTML page **after** Ractive.
