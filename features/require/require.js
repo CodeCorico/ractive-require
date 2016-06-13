@@ -355,20 +355,21 @@
       });
   }
 
-  function _listenToParentEvent(parent, ractive, databinding){
+  function _listenToParentEvent(parent, ractive, databinding) {
     var listenEvent = databinding.listening;
 
-    var fireLocalEvent = function(event){
-      parent.on(listenEvent[event], function(){
+    var fireLocalEvent = function(event) {
+      parent.on(listenEvent[event], function() {
         Array.prototype.unshift.call(arguments, event, listenEvent[event]);
 
         ractive.fire.apply(ractive, arguments);
       });
     };
 
-    for(var event in listenEvent){
-      if(!listenEvent.hasOwnProperty(event))
+    for (var event in listenEvent) {
+      if (!listenEvent.hasOwnProperty(event)) {
         continue;
+      }
 
       fireLocalEvent(event);
     }
