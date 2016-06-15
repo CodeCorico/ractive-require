@@ -66,11 +66,17 @@
 
       if (attr.name.indexOf('data-on-') === 0) {
         name = attr.name.substr(8, attr.name.length - 8);
-        events[name] = attr.value;
+        name.split("-").map(function(eventName) {
+          if (eventName.trim() !== "")
+            events[eventName] = attr.value;
+        });
       }
       else if (attr.name.indexOf('data-listen-') === 0) {
         name = attr.name.substr(12, attr.name.length - 12);
-        listening[name] = attr.value;
+        name.split("-").map(function(eventName) {
+          if (eventName.trim() !== "")
+            listening[eventName] = attr.value;
+        });
       }
       else if (attr.name.indexOf('data-bind-') === 0) {
         name = attr.name.substr(10, attr.name.length - 10);
