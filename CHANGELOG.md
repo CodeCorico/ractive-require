@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.4"></a>
+# 0.6.4 (2016-06-20)
+
+[Release 0.6.4](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.4)
+
+### Breaking changes
+
+- **require**
+  - data-on-* && data-listen-* supports multi events [#11 by @frostbane](https://github.com/CodeCorico/ractive-require/pull/11)
+
 <a name="0.6.3"></a>
 # 0.6.3 (2016-06-13)
 
@@ -9,7 +19,6 @@
 
 - **require**
   - Add data-listen-* support to bind events between from children to parents [#10 by @frostbane](https://github.com/CodeCorico/ractive-require/pull/10)
-
 
 <a name="0.6.2"></a>
 # 0.6.2 (2016-06-08)
