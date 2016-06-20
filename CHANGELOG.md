@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.5"></a>
+# 0.6.5 (2016-06-20)
+
+[Release 0.6.5](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.5)
+
+### Breaking changes
+
+- **ractive-require**
+  - Build distribution files. My bad.
+
 <a name="0.6.4"></a>
 # 0.6.4 (2016-06-20)
 
