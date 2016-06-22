@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.6"></a>
+# 0.6.6 (2016-06-22)
+
+[Release 0.6.6](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.6)
+
+### Breaking changes
+
+- **ractive-require**
+  - Remove children required when they have no DOM node parent. Usefull to use requires in a mustache loop.
+
 <a name="0.6.5"></a>
 # 0.6.5 (2016-06-20)
 
