@@ -481,13 +481,25 @@
 
     return new window.Ractive.Promise(function(fulfil) {
 
+      function cleanChildren() {
+        setTimeout(function() {
+          for (var i = _this.childrenRequire.length - 1; i >= 0; i--) {
+            if (!_this.childrenRequire[i].el.parentNode) {
+              _this.childrenRequire[i].teardown();
+            }
+          }
+        });
+
+        fulfil();
+      }
+
       var elements = name ?
             _this.el.querySelectorAll('rv-require[src][ondemand="' + name + '"]:not([loaded="true"])') :
             _this.el.querySelectorAll('rv-require[src]:not([loaded="true"]):not([ondemand])'),
           count = elements.length;
 
       if (count < 1) {
-        return fulfil();
+        return cleanChildren();
       }
 
       [].forEach.call(elements, function(element) {
@@ -496,14 +508,14 @@
           _requireElement(_this, element, function() {
             --count;
             if (count < 1) {
-              fulfil();
+              cleanChildren();
             }
           });
         }
         else {
           --count;
           if (count < 1) {
-            fulfil();
+            cleanChildren();
           }
         }
       });
