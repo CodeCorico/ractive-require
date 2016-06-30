@@ -1,5 +1,16 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.7"></a>
+# 0.6.7 (2016-06-30)
+
+[Release 0.6.7](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.7)
+
+### Breaking changes
+
+- **require**
+  - Add data-bindparent-* to only bind the changes from the parent to the child.
+  - Add data-bindchild-* to only bind the changes from the child to the parent.
+
 <a name="0.6.6"></a>
 # 0.6.6 (2016-06-22)
 
@@ -7,7 +18,7 @@
 
 ### Breaking changes
 
-- **ractive-require**
+- **require**
   - Remove children required when they have no DOM node parent. Usefull to use requires in a mustache loop.
 
 <a name="0.6.5"></a>
