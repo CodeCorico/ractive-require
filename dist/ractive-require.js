@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.6.6). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.6.7). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -152,11 +152,26 @@
     });
   }
 
+  function _fillEventsFromName(events, name, value) {
+    events = events || {};
+
+    name.split('-').forEach(function(eventName) {
+      if (eventName) {
+        events[eventName] = value;
+      }
+    });
+
+    return events;
+  }
+
   function _fetchDataBinding(element, parent) {
-    var data = {},
-        binds = {},
-        events = {},
-        listening = {},
+    var result = {
+          data: {},
+          bindsParents: {},
+          bindsChildren: {},
+          events: {},
+          listening: {}
+        },
         attr,
         name;
 
@@ -165,37 +180,34 @@
 
       if (attr.name.indexOf('data-on-') === 0) {
         name = attr.name.substr(8, attr.name.length - 8);
-        name.split('-').forEach(function(eventName) {
-          if (eventName.trim()) {
-            events[eventName] = attr.value;
-          }
-        });
+        result.events = _fillEventsFromName(result.events, name, attr.value);
       }
       else if (attr.name.indexOf('data-listen-') === 0) {
         name = attr.name.substr(12, attr.name.length - 12);
-        name.split('-').forEach(function(eventName) {
-          if (eventName.trim()) {
-            listening[eventName] = attr.value;
-          }
-        });
+        result.events = _fillEventsFromName(result.events, name, attr.value);
       }
       else if (attr.name.indexOf('data-bind-') === 0) {
         name = attr.name.substr(10, attr.name.length - 10);
-        data[name] = parent.get(attr.value);
-        binds[name] = attr.value;
+        result.data[name] = parent.get(attr.value);
+        result.bindsParents[name] = attr.value;
+        result.bindsChildren[name] = attr.value;
+      }
+      else if (attr.name.indexOf('data-bindparent-') === 0) {
+        name = attr.name.substr(16, attr.name.length - 16);
+        result.data[name] = parent.get(attr.value);
+        result.bindsParents[name] = attr.value;
+      }
+      else if (attr.name.indexOf('data-bindchild-') === 0) {
+        name = attr.name.substr(15, attr.name.length - 15);
+        result.bindsChildren[name] = attr.value;
       }
       else if (attr.name.indexOf('data-') === 0) {
         name = attr.name.substr(5, attr.name.length - 5);
-        data[name] = attr.value;
+        result.data[name] = attr.value;
       }
     }
 
-    return {
-      data: data,
-      binds: binds,
-      events: events,
-      listening: listening
-    };
+    return result;
   }
 
   function _applyAbsolutePath(template, src) {
@@ -378,9 +390,12 @@
               observers = [],
               bind;
 
-          for (bind in databinding.binds) {
-            observers.push(_createObserver(parent, ractive, bind, databinding.binds[bind]));
-            observers.push(_createObserver(ractive, parent, databinding.binds[bind], bind));
+          for (bind in databinding.bindsParents) {
+            observers.push(_createObserver(parent, ractive, bind, databinding.bindsParents[bind]));
+          }
+
+          for (bind in databinding.bindsChildren) {
+            observers.push(_createObserver(ractive, parent, databinding.bindsChildren[bind], bind));
           }
 
           ractive.on('unrender', function() {
