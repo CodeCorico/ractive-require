@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.8"></a>
+# 0.6.8 (2016-08-05)
+
+[Release 0.6.8](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.8)
+
+### Hotfixes
+
+- **require**
+  - Fix "data-listen-*" that was a clone of "data-on-*"
+
 <a name="0.6.7"></a>
 # 0.6.7 (2016-06-30)
 
