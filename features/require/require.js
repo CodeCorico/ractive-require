@@ -85,7 +85,7 @@
       }
       else if (attr.name.indexOf('data-listen-') === 0) {
         name = attr.name.substr(12, attr.name.length - 12);
-        result.events = _fillEventsFromName(result.events, name, attr.value);
+        result.listening = _fillEventsFromName(result.listening, name, attr.value);
       }
       else if (attr.name.indexOf('data-bind-') === 0) {
         name = attr.name.substr(10, attr.name.length - 10);
