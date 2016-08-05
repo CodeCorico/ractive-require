@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.6.7). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.6.8). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -184,7 +184,7 @@
       }
       else if (attr.name.indexOf('data-listen-') === 0) {
         name = attr.name.substr(12, attr.name.length - 12);
-        result.events = _fillEventsFromName(result.events, name, attr.value);
+        result.listening = _fillEventsFromName(result.listening, name, attr.value);
       }
       else if (attr.name.indexOf('data-bind-') === 0) {
         name = attr.name.substr(10, attr.name.length - 10);
