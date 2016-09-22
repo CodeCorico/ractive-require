@@ -1,6 +1,8 @@
 (function() {
   'use strict';
 
+  var _allRactives = [];
+
   function _requirePartial(rvPartial, callback) {
     var src = rvPartial.getAttribute('src') || false,
         target = rvPartial.getAttribute('target');
@@ -329,6 +331,14 @@
                 ractive.childrenRequire[i].teardown();
               }
             }
+
+            for (i = 0; i < _allRactives.length; i++) {
+              if (_allRactives[i] == ractive) {
+                _allRactives.splice(i, 1);
+
+                break;
+              }
+            }
           });
 
           ractive.on('teardown', function() {
@@ -364,6 +374,8 @@
           _fireBindedEvent(parent, ractive, databinding);
 
           parent.childrenRequire.push(ractive);
+
+          _allRactives.push(ractive);
 
           return ractive;
         }, databinding.data, element, {
@@ -485,6 +497,16 @@
         _injectCSS(name, file, fulfil);
       });
     }
+  };
+
+  window.Ractive.findRequireByEl = function(el) {
+    for (var i = 0; i < _allRactives.length; i++) {
+      if (_allRactives[i].el == el) {
+        return _allRactives[i];
+      }
+    }
+
+    return null;
   };
 
   window.Ractive.prototype.require = function(name) {
