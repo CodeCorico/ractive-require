@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.6.8). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.6.9). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -99,6 +99,8 @@
 
 (function() {
   'use strict';
+
+  var _allRactives = [];
 
   function _requirePartial(rvPartial, callback) {
     var src = rvPartial.getAttribute('src') || false,
@@ -428,6 +430,14 @@
                 ractive.childrenRequire[i].teardown();
               }
             }
+
+            for (i = 0; i < _allRactives.length; i++) {
+              if (_allRactives[i] == ractive) {
+                _allRactives.splice(i, 1);
+
+                break;
+              }
+            }
           });
 
           ractive.on('teardown', function() {
@@ -463,6 +473,8 @@
           _fireBindedEvent(parent, ractive, databinding);
 
           parent.childrenRequire.push(ractive);
+
+          _allRactives.push(ractive);
 
           return ractive;
         }, databinding.data, element, {
@@ -584,6 +596,16 @@
         _injectCSS(name, file, fulfil);
       });
     }
+  };
+
+  window.Ractive.findRequireByEl = function(el) {
+    for (var i = 0; i < _allRactives.length; i++) {
+      if (_allRactives[i].el == el) {
+        return _allRactives[i];
+      }
+    }
+
+    return null;
   };
 
   window.Ractive.prototype.require = function(name) {
