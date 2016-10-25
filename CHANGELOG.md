@@ -1,5 +1,15 @@
 # Ractive-Require - Changelog
 
+<a name="0.6.10"></a>
+# 0.6.10 (2016-10-25)
+
+[Release 0.6.10](https://github.com/CodeCorico/ractive-require/releases/tag/0.6.10)
+
+### Breaking changes
+
+- **require**
+  - Fire an event and continue the script on load file error.
+
 <a name="0.6.9"></a>
 # 0.6.9 (2016-09-22)
 
