@@ -449,6 +449,11 @@
 
     var element = elementConstructor();
     element.onload = callback;
+    element.onerror = function(err) {
+      _fireError(err);
+
+      callback();
+    };
 
     window.Ractive.injects.push(name);
     document.getElementsByTagName('head')[0].appendChild(element);
@@ -496,6 +501,28 @@
       return new window.Ractive.Promise(function(fulfil) {
         _injectCSS(name, file, fulfil);
       });
+    }
+  };
+
+  var _requireOnError = [];
+
+  function _fireError(err) {
+    _requireOnError.forEach(function(func) {
+      func(err);
+    });
+  }
+
+  window.Ractive.require.onError = function(func) {
+    _requireOnError.push(func);
+  };
+
+  window.Ractive.require.offError = function(func) {
+    func = func.toString();
+
+    for (var i = _requireOnError.length - 1; i >= 0; i--) {
+      if (_requireOnError[i].toString() == func) {
+        _requireOnError.splice(i, 1);
+      }
     }
   };
 
