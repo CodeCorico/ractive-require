@@ -1,5 +1,3 @@
-# Ractive-Require - Changelog
-
 <a name="0.6.10"></a>
 # 0.6.10 (2016-10-25)
 

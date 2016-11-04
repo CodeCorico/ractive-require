@@ -1,6 +1,6 @@
 <!-- Please do not submit support request here, instead see https://github.com/CodeCorico/ractive-require/blob/master/CONTRIBUTING.md#question -->
 
-**I'm submitting a...**  (check one with "x")
+**I'm submitting a...**  <!-- check one with "x" -->
 ```
 [ ] bug report
 [ ] feature request

@@ -3,7 +3,7 @@
 - [ ] Docs have been added / updated to [ractive-require.codecorico.com](https://github.com/CodeCorico/ractive-require.codecorico.com)
 
 
-**What kind of change does this PR introduce?** (check one with "x")
+**What kind of change does this PR introduce?** <!-- check one with "x" -->
 ```
 [ ] Bugfix
 [ ] Feature
