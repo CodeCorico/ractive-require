@@ -1,3 +1,9 @@
+<a name="0.6.11"></a>
+# [0.6.11](https://github.com/CodeCorico/ractive-require/compare/0.6.10...0.6.11) (2016-11-04)
+
+### Bug Fixes
+* **require:** remove the params from the file extension [#a58988b](https://github.com/CodeCorico/ractive-require/commit/a58988b)
+
 <a name="0.6.10"></a>
 # 0.6.10 (2016-10-25)
 
