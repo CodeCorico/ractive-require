@@ -491,7 +491,7 @@
 
     file = file || name;
 
-    extension = (file.split('.').pop() || '').toLowerCase();
+    extension = (file.split('?')[0].split('.').pop() || '').toLowerCase();
     if (extension == 'js') {
       return new window.Ractive.Promise(function(fulfil) {
         _injectJS(name, file, fulfil);
