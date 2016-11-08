@@ -22,15 +22,13 @@
     }
   }
 
-  window.Ractive.fireController = function(name, component, data, el, config, callback, tries) {
-    tries = tries === false ? tries : (tries || 0) + 1;
-
+  window.Ractive.fireController = function(name, component, data, el, config, callback, retry) {
     if (_controllers[name]) {
       _callControllers(_controllers[name], component, data, el, config, 0, callback);
     }
-    else if (tries !== false && tries < 500) {
+    else if (retry !== false) {
       setTimeout(function() {
-        window.Ractive.fireController(name, component, data, el, config, callback, tries);
+        window.Ractive.fireController(name, component, data, el, config, callback, retry);
       }, 10);
     }
     else if (callback) {
