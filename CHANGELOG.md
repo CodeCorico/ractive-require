@@ -1,3 +1,9 @@
+<a name="0.6.12"></a>
+# [0.6.12](https://github.com/CodeCorico/ractive-require/compare/0.6.11...0.6.12) (2016-11-08)
+
+### Bug Fixes
+* **contoller:** never stop retry calling controller [#cadaad3](https://github.com/CodeCorico/ractive-require/commit/cadaad3)
+
 <a name="0.6.11"></a>
 # [0.6.11](https://github.com/CodeCorico/ractive-require/compare/0.6.10...0.6.11) (2016-11-04)
 
