@@ -1,4 +1,4 @@
-/*! Ractive-Require (0.6.11). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
+/*! Ractive-Require (0.6.12). (C) 2016 CodeCorico. MIT @license: en.wikipedia.org/wiki/MIT_License */
 (function() {
   // Source: https://github.com/ractivejs/ractive-load/blob/master/src/utils/get.js
   // Author: Rich-Harris (https://github.com/Rich-Harris)
@@ -79,15 +79,13 @@
     }
   }
 
-  window.Ractive.fireController = function(name, component, data, el, config, callback, tries) {
-    tries = tries === false ? tries : (tries || 0) + 1;
-
+  window.Ractive.fireController = function(name, component, data, el, config, callback, retry) {
     if (_controllers[name]) {
       _callControllers(_controllers[name], component, data, el, config, 0, callback);
     }
-    else if (tries !== false && tries < 500) {
+    else if (retry !== false) {
       setTimeout(function() {
-        window.Ractive.fireController(name, component, data, el, config, callback, tries);
+        window.Ractive.fireController(name, component, data, el, config, callback, retry);
       }, 10);
     }
     else if (callback) {
